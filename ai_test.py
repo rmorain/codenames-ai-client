@@ -33,7 +33,7 @@ def printBoard(selected, colors=None):
             line = []
 
 
-def loadWords(filename="word_list.txt"):
+def loadWords(filename:str ="word_list.txt") -> list:
     """Load words from a text file, one word per line."""
     try:
         with open(filename, "r") as file:
@@ -59,12 +59,12 @@ def getAI():
 def runTrial():
     # blue first
     words = loadWords()
-    colors = ["U"] * 9 + ["R"] * 8 + ["N"] * 7 + ["A"]
+    colors = ["U"] * 9 + ["R"] * 8 + ["N"] * 7 + ["A"] # Blue team has more words to guess
 
     shuffle(colors)
 
     selected = sample(words, BOARD_SIZE)
-    covered = [False] * BOARD_SIZE
+    covered = [False] * BOARD_SIZE # This variable seems unused.
 
     board = {"U": [], "R": [], "N": [], "A": []}
     for i in range(BOARD_SIZE):
@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
     selected, colors, board, clue, combo = runTrial()
     print()
-    printBoard(selected)
+    printBoard(selected, colors)
 
     print(clue)
     print()

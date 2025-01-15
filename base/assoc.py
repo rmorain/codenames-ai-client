@@ -2,7 +2,7 @@ class Assoc:
     def __init__(self):
         pass
 
-    def getAssocs(self, pos, neg, topn):
+    def getAssocs(self, pos, neg, topn) -> list[tuple[str, float]]:
         """
         Find words associated with positive words but not negative words.
 

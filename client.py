@@ -7,6 +7,7 @@ from socketio.exceptions import TimeoutError
 
 from agents.word2vec import W2VAssoc, W2VSpymaster
 from base.constants import Team
+import time
 
 # Game Constants
 BOARD_SIZE = 25
@@ -53,15 +54,20 @@ def make_clue(ai, board: Dict[str, List[str]], code: str, team: Team) -> Dict:
 def play_game(sio: socketio.SimpleClient, code: str, team: str, ai) -> None:
     state = requests.get(GET_STATE_URL + code).json()
     if "error" in state:
+        print(f"Error: {state['error']}")
         raise ValueError(f"Game error: {state['error']}")
 
+    time_started_waiting = time.time()
     while True:
         if Team[state["curr_turn"].upper()] == team and is_empty_clue(
             state["curr_clue"]
         ):
             state = make_clue(ai, create_board(state), code, team)
+            time_started_waiting = time.time()
 
         try:
+            elapsed_time = round(time.time() - time_started_waiting, 2)
+            print(f'Waiting for my turn to submit clue {elapsed_time} seconds')
             event = sio.receive(timeout=5)
             event_name, data = event[0], event[1]
 
