@@ -49,6 +49,7 @@ class W2VAssoc(Assoc):
 
 
 class Combo:
+    """Stores and manages clues and their similarity scores."""
     def __init__(self):
         self.scores = []
         self.max_clue = None
@@ -115,11 +116,11 @@ class W2VSpymaster(BaseSpymaster):
 
             # Step 8: Filter and store valid clues
             any_added = False
-            for clue, sim in curr:
+            for clue, similarity in curr:
                 clue = clue.lower()
                 # Only accept clues that aren't already on the board
                 if isValid(clue, board_words):
-                    combos[combo].addOption(clue, sim)
+                    combos[combo].addOption(clue, similarity)
                     any_added = True
             if not any_added:
                 print("NONE ADDED:", combo, [clue for clue, sim in curr])

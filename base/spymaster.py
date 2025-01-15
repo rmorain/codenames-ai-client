@@ -1,11 +1,12 @@
 from .constants import Team
+from base.assoc import Assoc
 
 
 class BaseSpymaster:
-    def __init__(self, assoc):
+    def __init__(self, assoc: Assoc):
         self.assoc = assoc
 
-    def makeClue(self, board, team: Team):
+    def makeClue(self, board, team: Team) -> tuple[tuple[str, int], tuple[str]]:
         """Generate a clue for the current game state.
 
         This method should analyze the game board and generate a clue that helps
